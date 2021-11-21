@@ -1,10 +1,16 @@
-import React from 'react'
+import React from "react";
+import FullPageScrollWrapper from "./FullPageScrollWrapper";
+
 
 const App = () => {
-    return (
-        <div>
-            <h1>My React App</h1>
-        </div>
-    )
+  return (
+    <>
+      <FullPageScrollWrapper>
+        <div>하나</div>
+        <div>둘</div>
+      </FullPageScrollWrapper>
+    </>
+  );
 }
-export default App
+
+export default App;
