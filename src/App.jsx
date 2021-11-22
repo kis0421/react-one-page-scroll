@@ -8,6 +8,7 @@ const App = () => {
       <FullPageScrollWrapper>
         <div>하나</div>
         <div>둘</div>
+        <div>셋</div>        
       </FullPageScrollWrapper>
     </>
   );
