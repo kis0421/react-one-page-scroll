@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const FullPageScrollWrapper = (props) => {
-  const [currentPage, setCurrentPage] = useState(0);
-  const [lastScrollTop, setLastScrollTop] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const getScreenSize = () => ({
     width: window.innerWidth - 17,
@@ -10,24 +9,18 @@ const FullPageScrollWrapper = (props) => {
   });
 
   const screenResize = () => {
-    console.log(getScreenSize())
     setScreenSize(getScreenSize());
   }
 
   const screenRePosition = (event) => {
-    console.log(event.deltaY, currentPage)
     if (event.deltaY < 0) {
-      console.log("위", currentPage);
-      setCurrentPage(currentPage - 1);
+      setCurrentPage(Math.max(0, currentPage - 1));
     } else {
-      console.log("아래", currentPage, currentPage + 1);
-      setCurrentPage(currentPage + 1);
+      setCurrentPage(Math.min(currentPage + 1, props.children.length));
     }
-
   }
 
   const [screenSize, setScreenSize] = useState(getScreenSize);
-  const [screenYPosiion, setScreenYPosiion] = useState();
 
   useEffect(() => {
     window.addEventListener("resize", screenResize);
@@ -36,15 +29,14 @@ const FullPageScrollWrapper = (props) => {
       window.removeEventListener("resize", screenResize);
       window.removeEventListener("wheel", screenRePosition);
     };
-  }, [])
-  console.log(currentPage)
+  }, [currentPage]);
+
   return (<>
-  <button onClick={() => setCurrentPage(currentPage + 1)}>ddd</button>
-    <div style={{ overflow: "hidden" }}>
+    <div style={{ position: "relative", width: "100%", overflow: "hidden" }}>
       <div style={{
         height: screenSize.height,
-        transform: `translateY(${(currentPage * screenSize.height) * -1}px)`,
-        transition: "transform 0.9s ease 0s",
+        transform: `translateY(-${(currentPage - 1) * screenSize.height}px)`,
+        transition: "transform 1s ease 0s",
       }}>
         {props.children.map((element, index) => (
           <div
