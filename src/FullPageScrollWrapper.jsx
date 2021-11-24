@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 const FullPageScrollWrapper = (props) => {
+  const delay = props.delay || 1000;
+  const useLoop = props.loop || false;
+
   const getScreenSize = () => ({
     width: window.innerWidth - 17,
     height: window.innerHeight,
@@ -12,9 +15,17 @@ const FullPageScrollWrapper = (props) => {
 
   const screenRePosition = (event) => {
     if (event.deltaY < 0) {
-      setCurrentPage(Math.max(1, currentPage - 1));
+      if (currentPage === 1 && useLoop) {
+        setCurrentPage(props.children.length);
+      } else {
+        setCurrentPage(Math.max(1, currentPage - 1));
+      }
     } else {
-      setCurrentPage(Math.min(currentPage + 1, props.children.length));
+      if (currentPage === props.children.length && useLoop) {
+        setCurrentPage(1);
+      } else {
+        setCurrentPage(Math.min(props.children.length, currentPage + 1));
+      }
     }
   }
 
@@ -35,7 +46,7 @@ const FullPageScrollWrapper = (props) => {
       <div style={{
         height: screenSize.height,
         transform: `translateY(-${(currentPage - 1) * screenSize.height}px)`,
-        transition: "transform 1s ease 0s",
+        transition: `transform ${delay / 1000}s ease 0s`,
       }}>
         {props.children.map((element, index) => (
           <div
