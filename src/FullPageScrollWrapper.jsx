@@ -14,6 +14,7 @@ const FullPageScrollWrapper = (props) => {
   }
 
   const screenRePosition = (event) => {
+    // TODO: 가독성이 떨어짐 리팩토링 필요
     if (event.deltaY < 0) {
       if (currentPage === 1 && useLoop) {
         setCurrentPage(props.children.length);
@@ -33,6 +34,7 @@ const FullPageScrollWrapper = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
+    // TODO: delay만큼 debounce 추가  필요
     window.addEventListener("resize", screenResize);
     window.addEventListener("wheel", screenRePosition);
     return () => {
