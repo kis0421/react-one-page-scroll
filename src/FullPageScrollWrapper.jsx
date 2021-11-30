@@ -14,19 +14,19 @@ const FullPageScrollWrapper = (props) => {
   }
 
   const screenRePosition = (event) => {
-    // TODO: 가독성이 떨어짐 리팩토링 필요
-    if (event.deltaY < 0) {
-      if (currentPage === 1 && useLoop) {
-        setCurrentPage(props.children.length);
-      } else {
-        setCurrentPage(Math.max(1, currentPage - 1));
-      }
+    const prev = event.deltaY < 0;
+    if (prev) {
+      setCurrentPage(
+        currentPage === 1 && useLoop
+          ? props.children.length
+          : Math.max(1, currentPage - 1)
+      );
     } else {
-      if (currentPage === props.children.length && useLoop) {
-        setCurrentPage(1);
-      } else {
-        setCurrentPage(Math.min(props.children.length, currentPage + 1));
-      }
+      setCurrentPage(
+        currentPage === props.children.length && useLoop
+          ? 1
+          : Math.min(props.children.length, currentPage + 1)
+      );
     }
   }
 
