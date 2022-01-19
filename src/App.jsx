@@ -6,13 +6,13 @@ const App = () => {
   return (
     <>
       <FullPageScrollWrapper 
-        delay={3000}
+        delay={1000}
         loop={true}
       >
-        <div>하나</div>
-        <div>둘</div>
-        <div>셋</div>        
-        <button>킄크크</button>
+        <div>first</div>
+        <div>second</div>
+        <div>third</div>        
+        <button>bye~</button>
       </FullPageScrollWrapper>
     </>
   );
