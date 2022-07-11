@@ -4,10 +4,13 @@ const FullPageScrollWrapper = (props) => {
   const delay = props.delay || 1000;
   const useLoop = props.loop || false;
 
-  const getScreenSize = () => ({
-    width: window.innerWidth - 17,
-    height: window.innerHeight,
-  });
+  const getScreenSize = () => {
+    const scrollBarWidth = window.innerWidth - document.body.clientWidth;
+    return {
+      width: window.innerWidth - scrollBarWidth,
+      height: window.innerHeight,
+    }
+  };
 
   const screenResize = () => {
     setScreenSize(getScreenSize());
